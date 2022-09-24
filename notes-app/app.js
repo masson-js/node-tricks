@@ -6,61 +6,65 @@ const notes = require('./notes.js')
 
 yargs.version('1.1.0')
 
-//create add command
+//  TEMPLATES:
 
-// yargs.command({
-//   command: 'add',
-//   builder: {
-//     title: {
-//       describe: 'note title',
-//       demandOption: true,
-//       type: 'string'
-//     },
-//   },
-//   describe: 'add new note',
-//   handler: function(argv) {
-//     console.log('title ', argv.title)
-//   }
-// })
-
-// // create romve command
+// add note
 
 yargs.command({
-  command: 'remove',
-  describe: 'remove new note',
+  command: 'add',
+  describe: 'add notes',
   builder: {
-    title: {
-      describe: 'Note title',
-      demanOption: true,
+      title: {
+        describe: 'I add your notes',
+        demandOption: true,
+        type: 'string'
+      },
+    body: {
+      describe: 'Note body',
+      demandOption: true,
       type: 'string'
     }
   },
-  handler: function(argv) {
+  handler(argv) {
+    notes.addNote(argv.title, argv.body)
+  }
+})
+
+// remove note
+
+yargs.command({
+  command: 'remove',
+  describe: 'remove a note',
+  builder: {
+      title: {
+        describe: 'remove a note',
+        demanOption: true,
+        type: 'string'
+    }
+  },
+  handler(argv) {
     notes.removeNote(argv.title)
   }
 })
 
-// add, remove, list, read notes
+// Create list
 
 yargs.command({
-  command: 'add',
-  builder: {
-    title: {
-      describe: 'I add you notes',
-      demandOption: true,
-      type: 'string'
-    },
-    body: {
-      describe: ' body title',
-      demandOption: true,
-      type: 'string'
-    }
-  },
-  describe: 'add notes',
-  handler: function(argv) {
-    notes.addNote(argv.title, argv.body)
+  command: 'create list',
+  describe: 'List of my notes',
+  handler() {
+    console.log('list out all notes')
   }
-}
-)
+})
+
+// read notes
+
+yargs.command({
+  command: 'read',
+  describe: 'Read notes',
+  handler() {
+    console.log('Reading a note')
+  }
+})
 
 yargs.parse()
